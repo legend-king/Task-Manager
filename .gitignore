@@ -1,0 +1,60 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+myenv/
+.env/
+script.sh
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Logs and databases
+*.log
+*.db
+
+# Compiled Python files
+*.pyc
+
+# Project-specific files
+*.pyproj
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore the Pipfile and Pipfile.lock, created by pipenv
+Pipfile
+Pipfile.lock
+
+# Ignore the poetry.lock file created by poetry
+poetry.lock
+
+# Ignore generated HTML files
+htmlcov/
+
+# Ignore coverage reports
+.coverage
+.coverage.*
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+
+# Ignore secret config file
+config.ini
+
+# Ignore environment file
+.env
+
+# Ignore any local .env files
+.env*
+
+# Ignore Docker Compose files
+docker-compose.yml
+docker-compose.override.yml
