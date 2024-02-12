@@ -76,10 +76,10 @@ class TaskMaterialAdmin(admin.ModelAdmin):
     autocomplete_fields = ('task',)
 
     def reference_link_clickable(self, taskMaterial):
-        link_data = taskMaterial.reference_link
-        if not link_data:
-            link_data = taskMaterial.document
-        link = f'<a href={link_data}>{link_data}</a>'
+        if not taskMaterial.reference_link:
+            link = f'<a href=/media/{taskMaterial.document}>{taskMaterial.document}</a>'
+        else:
+            link = f'<a href={taskMaterial.reference_link}>{taskMaterial.reference_link}</a>'
         return mark_safe(link)
 
     reference_link_clickable.short_description = 'Material'
