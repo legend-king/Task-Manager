@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Task, TaskCategory, TaskMaterial
+from .models import Task, TaskCategory, TaskMaterial, TaskNote
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 
@@ -19,13 +19,17 @@ class TaskMaterialInline(admin.StackedInline):
     model = TaskMaterial
     extra = 0
 
+class TaskNoteInline(admin.TabularInline):
+    model = TaskNote
+    extra = 1
+
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'completed', 'created_at', 'updated_at')
     list_filter = ('category', 'completed')
     search_fields = ('title', 'description')
     autocomplete_fields = ('category', 'sub_task_of')
-    inlines = [TaskInline,TaskMaterialInline]
+    inlines = [TaskInline,TaskMaterialInline, TaskNoteInline]
 
     # def formfield_for_manytomany(self, db_field, request, **kwargs):
     #     if db_field.name == 'sub_tasks':
@@ -89,3 +93,10 @@ class TaskMaterialAdmin(admin.ModelAdmin):
         if not request.user.is_superuser:
             return qs.filter(task__category__user=request.user)
         return qs
+
+@admin.register(TaskNote)
+class TaskNoteAdmin(admin.ModelAdmin):
+    list_display = ('task', 'note')
+    search_fields = ('task__title', 'task__description', 'note')
+    list_filter = ('task',)
+    autocomplete_fields = ['task']

@@ -21,7 +21,7 @@ class TaskCategory(models.Model):
 class Task(models.Model):
     title = models.CharField(max_length=200)
     category = models.ForeignKey(TaskCategory, on_delete=models.CASCADE)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     completed = models.BooleanField(default=False)
     sub_task_of = models.ForeignKey('Task', blank=True, null=True, on_delete=models.CASCADE)
     due_date = models.DateField(null=True, blank=True)
@@ -57,3 +57,10 @@ class TaskMaterial(models.Model):
 
     def __str__(self):
         return self.title
+    
+class TaskNote(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    note = models.TextField()
+
+    def __str__(self):
+        return f"{self.task} - Note"
