@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Task, TaskCategory, TaskMaterial
 from django.db.models import Q
+from django.utils.safestring import mark_safe
 
 # Register your models here.
 class TaskInline(admin.StackedInline):
@@ -69,10 +70,20 @@ class TaskCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(TaskMaterial)
 class TaskMaterialAdmin(admin.ModelAdmin):
-    list_display = ('title', 'task', 'reference_link','created_at', 'updated_at')
+    list_display = ('title', 'task', 'reference_link_clickable','created_at', 'updated_at')
     list_filter = ('task',)
     search_fields = ('title', 'description')
     autocomplete_fields = ('task',)
+
+    def reference_link_clickable(self, taskMaterial):
+        if not taskMaterial.reference_link:
+            link = f'<a href=/media/{taskMaterial.document}>{taskMaterial.document}</a>'
+            return mark_safe(link)
+            return taskMaterial.document
+        link = f'<a href={taskMaterial.reference_link}>{taskMaterial.reference_link}</a>'
+        return mark_safe(link)
+
+    reference_link_clickable.short_description = 'Material'
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
